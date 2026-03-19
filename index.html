@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chicken Call</title>
+    <meta
+      name="description"
+      content="Chicken Call, un mini-jeu d'anglais jouable dans un site statique GitHub Pages."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@500;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/png" href="./assets/poule.png" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="page-glow page-glow-a"></div>
+    <div class="page-glow page-glow-b"></div>
+    <div class="page-shell">
+      <header class="topbar">
+        <div class="brand-block">
+          <div class="brand-mark" aria-hidden="true"></div>
+          <div>
+            <p class="eyebrow">Mini-game anglais</p>
+            <h1>Chicken Call</h1>
+            <p class="brand-subtitle">Un mini-jeu de ferme joyeux, coloré et ultra lisible</p>
+          </div>
+        </div>
+        <div class="topbar-actions">
+          <button id="howToButton" class="soft-button" type="button">Comment jouer</button>
+          <button id="restartButton" class="soft-button" type="button">Recommencer</button>
+        </div>
+      </header>
+
+      <main class="game-layout">
+        <section class="hud-panel">
+          <div class="card mission-card">
+            <div class="mission-head">
+              <div>
+                <p class="card-label">Mission</p>
+                <h2 id="promptText">Charge les bonnes poules.</h2>
+              </div>
+              <div class="mission-chick" aria-hidden="true"></div>
+            </div>
+            <p id="targetWords" class="target-words"></p>
+          </div>
+
+          <div class="stats-grid">
+            <article class="card stat-card stat-yellow">
+              <p class="card-label">A livrer</p>
+              <strong id="remainingText">0</strong>
+            </article>
+            <article class="card stat-card stat-green">
+              <p class="card-label">Empilement</p>
+              <strong id="stackText">0</strong>
+            </article>
+            <article class="card stat-card stat-coral">
+              <p class="card-label">Erreurs</p>
+              <strong id="mistakeText">0</strong>
+            </article>
+          </div>
+        </section>
+
+        <section class="board-wrap">
+          <div id="gameBoard" class="board" aria-label="Aire de jeu Chicken Call">
+            <div class="board-frame"></div>
+            <div class="sky-layer"></div>
+            <div class="cloud cloud-a"></div>
+            <div class="cloud cloud-b"></div>
+            <div class="cloud cloud-c"></div>
+            <div class="hill hill-a"></div>
+            <div class="hill hill-b"></div>
+            <div class="hill hill-c"></div>
+            <div class="tree tree-a"></div>
+            <div class="tree tree-b"></div>
+            <div class="tree tree-c"></div>
+            <div class="ground"></div>
+            <div class="field-track"></div>
+            <div class="fence fence-a"></div>
+            <div class="fence fence-b"></div>
+            <div class="barn-shadow"></div>
+            <div id="coop" class="coop" aria-hidden="true">
+              <div class="coop-roof"></div>
+              <div class="coop-body">
+                <div class="coop-sign">Henhouse</div>
+                <div class="coop-door"></div>
+              </div>
+            </div>
+            <div id="player" class="player" aria-hidden="true">
+              <div class="stack-anchor" id="stackAnchor"></div>
+              <div class="player-shadow"></div>
+              <div class="player-body">
+                <div class="player-head"></div>
+                <div class="player-torso"></div>
+              </div>
+            </div>
+            <div id="messageBubble" class="message-bubble hidden" aria-live="polite"></div>
+            <div id="flashText" class="flash-text hidden" aria-live="polite"></div>
+          </div>
+
+          <div class="touch-bar">
+            <div class="dpad">
+              <button class="move-button" data-dir="up" type="button">▲</button>
+              <div class="dpad-middle">
+                <button class="move-button" data-dir="left" type="button">◀</button>
+                <button class="move-button action-button" data-action="interact" type="button">E</button>
+                <button class="move-button" data-dir="right" type="button">▶</button>
+              </div>
+              <button class="move-button" data-dir="down" type="button">▼</button>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div id="overlay" class="overlay">
+      <div class="overlay-card">
+        <div class="overlay-medal" aria-hidden="true"></div>
+        <p class="overlay-kicker">Apprenti fermier</p>
+        <h2 id="overlayTitle">Ramène les bonnes poules au poulailler</h2>
+        <p id="overlayText">
+          Approche-toi d'une poule pour entendre son mot en anglais, prends-la avec E puis
+          dépose toutes les bonnes réponses dans le poulailler.
+        </p>
+        <div id="resultPanel" class="result-panel hidden">
+          <p id="resultLabel" class="result-label">Victoire</p>
+          <div id="overlayStars" class="overlay-stars" aria-label="Score en étoiles"></div>
+        </div>
+        <button id="overlayButton" class="primary-button big-button" type="button">Commencer</button>
+      </div>
+    </div>
+
+    <script src="./game.js"></script>
+  </body>
+</html>
