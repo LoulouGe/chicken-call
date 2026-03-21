@@ -21,21 +21,6 @@
     <div class="page-glow page-glow-a"></div>
     <div class="page-glow page-glow-b"></div>
     <div class="page-shell">
-      <header class="topbar">
-        <div class="brand-block">
-          <div class="brand-mark" aria-hidden="true"></div>
-          <div>
-            <p class="eyebrow">Mini-game anglais</p>
-            <h1>Chicken Call</h1>
-            <p class="brand-subtitle">Un mini-jeu de ferme joyeux, coloré et ultra lisible</p>
-          </div>
-        </div>
-        <div class="topbar-actions">
-          <button id="howToButton" class="soft-button" type="button">Comment jouer</button>
-          <button id="restartButton" class="soft-button" type="button">Recommencer</button>
-        </div>
-      </header>
-
       <main class="game-layout">
         <section class="hud-panel">
           <div class="card mission-card">
@@ -103,14 +88,16 @@
           </div>
 
           <div class="touch-bar">
-            <div class="dpad">
-              <button class="move-button" data-dir="up" type="button">▲</button>
-              <div class="dpad-middle">
-                <button class="move-button" data-dir="left" type="button">◀</button>
-                <button class="move-button action-button" data-action="interact" type="button">E</button>
-                <button class="move-button" data-dir="right" type="button">▶</button>
+            <div class="mobile-controls">
+              <div class="joystick-shell">
+                <div id="joystickBase" class="joystick-base">
+                  <div id="joystickKnob" class="joystick-knob"></div>
+                </div>
               </div>
-              <button class="move-button" data-dir="down" type="button">▼</button>
+              <div class="mobile-actions">
+                <button id="pickupButton" class="touch-action pickup-action" type="button">Prendre</button>
+                <button id="dropButton" class="touch-action drop-action" type="button">Deposer</button>
+              </div>
             </div>
           </div>
         </section>
