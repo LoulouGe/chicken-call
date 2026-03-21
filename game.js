@@ -180,11 +180,15 @@ const resultPanel = document.getElementById('resultPanel');
 const resultLabel = document.getElementById('resultLabel');
 const overlayStars = document.getElementById('overlayStars');
 const promptText = document.getElementById('promptText');
+const mobilePromptText = document.getElementById('mobilePromptText');
 const targetWords = document.getElementById('targetWords');
 const roundText = document.getElementById('roundText');
 const remainingText = document.getElementById('remainingText');
+const mobileRemainingText = document.getElementById('mobileRemainingText');
 const stackText = document.getElementById('stackText');
+const mobileStackText = document.getElementById('mobileStackText');
 const mistakeText = document.getElementById('mistakeText');
+const mobileMistakeText = document.getElementById('mobileMistakeText');
 const hintText = document.getElementById('hintText');
 const hintButton = document.getElementById('hintButton');
 const restartButton = document.getElementById('restartButton');
@@ -399,13 +403,25 @@ function updateRoundUI() {
   const round = getCurrentRound();
   const remaining = round.requiredCount - state.rescuedThisRound;
   promptText.textContent = round.prompt;
+  if (mobilePromptText) {
+    mobilePromptText.textContent = round.prompt;
+  }
   targetWords.textContent = `Mots attendus: ${round.targets.join(', ')}`;
   if (roundText) {
     roundText.textContent = `${state.roundIndex + 1} / ${state.sessionRounds.length}`;
   }
   remainingText.textContent = `${remaining}`;
+  if (mobileRemainingText) {
+    mobileRemainingText.textContent = `${remaining}`;
+  }
   stackText.textContent = `${state.carried.length}`;
+  if (mobileStackText) {
+    mobileStackText.textContent = `${state.carried.length}`;
+  }
   mistakeText.textContent = `${state.mistakes} / ${settings.maxMistakesBeforeLose}`;
+  if (mobileMistakeText) {
+    mobileMistakeText.textContent = `${state.mistakes}/${settings.maxMistakesBeforeLose}`;
+  }
   if (hintText && state.hintsUsed === 0) {
     hintText.textContent = "Appuie sur H ou sur le bouton pour afficher l'indice.";
   }
