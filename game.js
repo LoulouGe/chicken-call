@@ -111,6 +111,174 @@ const exerciseThemes = [
     targets: ['reading', 'writing', 'sleeping', 'eating', 'playing', 'walking', 'climbing', 'singing'],
     distractors: ['carrot', 'window', 'bottle', 'market', 'pillow', 'doctor', 'banana', 'train'],
   },
+  {
+    label: 'un instrument de musique',
+    prompt: 'Amene les poules qui disent un instrument de musique.',
+    hint: 'Ecoute pour trouver des instruments.',
+    targets: ['piano', 'guitar', 'violin', 'drum', 'flute', 'trumpet', 'cello', 'harp'],
+    distractors: ['table', 'dog', 'apple', 'shirt', 'car', 'cloud', 'water', 'book']
+  },
+  {
+    label: 'un insecte',
+    prompt: 'Amene les poules qui disent un insecte.',
+    hint: 'Ces petites betes rampent ou volent.',
+    targets: ['ant', 'bee', 'spider', 'butterfly', 'fly', 'mosquito', 'beetle', 'worm'],
+    distractors: ['table', 'dog', 'apple', 'shirt', 'car', 'cloud', 'water', 'book']
+  },
+  {
+    label: 'un outil',
+    prompt: 'Amene les poules qui disent un outil.',
+    hint: 'Sert a bricoler.',
+    targets: ['hammer', 'saw', 'screwdriver', 'wrench', 'drill', 'nail', 'pliers', 'axe'],
+    distractors: ['table', 'dog', 'apple', 'shirt', 'car', 'cloud', 'water', 'book']
+  },
+  {
+    label: 'un oiseau',
+    prompt: 'Amene les poules qui disent un nom d\'oiseau.',
+    hint: 'Ils ont des plumes et volent.',
+    targets: ['eagle', 'pigeon', 'owl', 'parrot', 'penguin', 'swan', 'duck', 'robin'],
+    distractors: ['table', 'dog', 'apple', 'shirt', 'car', 'cloud', 'water', 'book']
+  },
+  {
+    label: 'une boisson',
+    prompt: 'Amene les poules qui disent une boisson.',
+    hint: 'De quoi se desalterer.',
+    targets: ['water', 'milk', 'juice', 'coffee', 'tea', 'soda', 'beer', 'wine'],
+    distractors: ['table', 'dog', 'apple', 'shirt', 'car', 'cloud', 'water', 'book']
+  },
+  {
+    label: 'une forme',
+    prompt: 'Amene les poules qui disent une forme geometrique.',
+    hint: 'Rond, carre, etc.',
+    targets: ['circle', 'square', 'triangle', 'rectangle', 'star', 'heart', 'diamond', 'oval'],
+    distractors: ['table', 'dog', 'apple', 'shirt', 'car', 'cloud', 'water', 'book']
+  },
+  {
+    label: 'un jour de la semaine',
+    prompt: 'Amene les poules qui disent un jour.',
+    hint: 'Du lundi au dimanche.',
+    targets: ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday', 'weekend'],
+    distractors: ['table', 'dog', 'apple', 'shirt', 'car', 'cloud', 'water', 'book']
+  },
+  {
+    label: 'un mois de l\'annee',
+    prompt: 'Amene les poules qui disent un mois.',
+    hint: 'De janvier a aout par exemple.',
+    targets: ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august'],
+    distractors: ['table', 'dog', 'apple', 'shirt', 'car', 'cloud', 'water', 'book']
+  },
+  {
+    label: 'un paysage naturel',
+    prompt: 'Amene les poules qui disent un type de paysage.',
+    hint: 'La nature en grand.',
+    targets: ['mountain', 'forest', 'beach', 'desert', 'island', 'lake', 'river', 'ocean'],
+    distractors: ['table', 'dog', 'apple', 'shirt', 'car', 'cloud', 'water', 'book']
+  },
+  {
+    label: 'un materiau',
+    prompt: 'Amene les poules qui disent un materiau de base.',
+    hint: 'Bois, metal, verre...',
+    targets: ['wood', 'metal', 'plastic', 'glass', 'paper', 'stone', 'cotton', 'leather'],
+    distractors: ['table', 'dog', 'apple', 'shirt', 'car', 'cloud', 'water', 'book']
+  },
+  {
+    label: 'une technologie',
+    prompt: 'Amene les poules qui disent un appareil electronique.',
+    hint: 'Ordinateur, telephone...',
+    targets: ['computer', 'phone', 'tablet', 'camera', 'robot', 'screen', 'keyboard', 'mouse'],
+    distractors: ['table', 'dog', 'apple', 'shirt', 'car', 'cloud', 'water', 'book']
+  },
+  {
+    label: 'un lieu urbain',
+    prompt: 'Amene les poules qui disent un espace de la ville.',
+    hint: 'Parc, rue, bibliotheque.',
+    targets: ['street', 'park', 'square', 'bridge', 'library', 'hospital', 'bank', 'museum'],
+    distractors: ['table', 'dog', 'apple', 'shirt', 'car', 'cloud', 'water', 'book']
+  },
+  {
+    label: 'un commerce',
+    prompt: 'Amene les poules qui disent un commerce ou magasin.',
+    hint: 'La ou l\'on achete des choses.',
+    targets: ['bakery', 'pharmacy', 'supermarket', 'restaurant', 'cafe', 'butcher', 'bookshop', 'post_office'],
+    distractors: ['table', 'dog', 'apple', 'shirt', 'car', 'cloud', 'water', 'book']
+  },
+  {
+    label: 'une partie du visage',
+    prompt: 'Amene les poules qui disent une partie du visage.',
+    hint: 'Yeux, nez, bouche...',
+    targets: ['eye', 'ear', 'nose', 'mouth', 'lip', 'tooth', 'cheek', 'chin'],
+    distractors: ['table', 'dog', 'apple', 'shirt', 'car', 'cloud', 'water', 'book']
+  },
+  {
+    label: 'un objet de cuisine',
+    prompt: 'Amene les poules qui disent un objet pour cuisiner ou manger.',
+    hint: 'Couteau, fourchette, assiette...',
+    targets: ['knife', 'fork', 'spoon', 'plate', 'bowl', 'cup', 'glass', 'pan'],
+    distractors: ['table', 'dog', 'apple', 'shirt', 'car', 'cloud', 'water', 'book']
+  },
+  {
+    label: 'une creature magique',
+    prompt: 'Amene les poules qui disent une creature imaginaire.',
+    hint: 'Fantomes, dragons...',
+    targets: ['dragon', 'unicorn', 'ghost', 'fairy', 'monster', 'giant', 'zombie', 'vampire'],
+    distractors: ['table', 'dog', 'apple', 'shirt', 'car', 'cloud', 'water', 'book']
+  },
+  {
+    label: 'un arbre ou plante',
+    prompt: 'Amene les poules qui disent une plante ou une fleur.',
+    hint: 'Rose, chene, herbe...',
+    targets: ['oak', 'pine', 'rose', 'daisy', 'grass', 'bush', 'leaf', 'bamboo'],
+    distractors: ['table', 'dog', 'apple', 'shirt', 'car', 'cloud', 'water', 'book']
+  },
+  {
+    label: 'un adjectif (taille/poids)',
+    prompt: 'Amene les poules qui disent un adjectif de taille ou poids.',
+    hint: 'Grand, petit, lourd...',
+    targets: ['big', 'small', 'tall', 'short', 'heavy', 'light', 'long', 'wide'],
+    distractors: ['table', 'dog', 'apple', 'shirt', 'car', 'cloud', 'water', 'book']
+  },
+  {
+    label: 'un adjectif (vitesse/force)',
+    prompt: 'Amene les poules qui disent un adjectif de vitesse ou force.',
+    hint: 'Rapide, lent, fort...',
+    targets: ['fast', 'slow', 'strong', 'weak', 'quick', 'rapid', 'brave', 'afraid'],
+    distractors: ['table', 'dog', 'apple', 'shirt', 'car', 'cloud', 'water', 'book']
+  },
+  {
+    label: 'un jouet',
+    prompt: 'Amene les poules qui disent un nom de jeu ou jouet.',
+    hint: 'Poupee, ballon, puzzle...',
+    targets: ['doll', 'ball', 'puzzle', 'kite', 'block', 'game', 'card', 'dice'],
+    distractors: ['table', 'dog', 'apple', 'shirt', 'car', 'cloud', 'water', 'book']
+  },
+  {
+    label: 'un truc de plage',
+    prompt: 'Amene les poules qui disent une affaire de plage.',
+    hint: 'Sable, serviette, vagues...',
+    targets: ['towel', 'sand', 'shell', 'sun', 'wave', 'bucket', 'spade', 'surf'],
+    distractors: ['table', 'dog', 'apple', 'shirt', 'car', 'cloud', 'water', 'book']
+  },
+  {
+    label: 'une piece de vehicule',
+    prompt: 'Amene les poules qui disent une piece de voiture.',
+    hint: 'Roue, moteur, porte...',
+    targets: ['wheel', 'engine', 'door', 'window', 'seat', 'mirror', 'brake', 'tire'],
+    distractors: ['table', 'dog', 'apple', 'shirt', 'car', 'cloud', 'water', 'book']
+  },
+  {
+    label: 'un truc de la salle de bain',
+    prompt: 'Amene les poules qui disent un objet de salle de bain.',
+    hint: 'Savon, douche, brosse...',
+    targets: ['soap', 'towel', 'brush', 'paste', 'comb', 'sink', 'bath', 'shower'],
+    distractors: ['table', 'dog', 'apple', 'shirt', 'car', 'cloud', 'water', 'book']
+  },
+  {
+    label: 'un mot du ciel',
+    prompt: 'Amene les poules qui disent une chose dans le ciel.',
+    hint: 'Lune, tempete, pluie...',
+    targets: ['sun', 'moon', 'star', 'cloud', 'rain', 'wind', 'snow', 'storm'],
+    distractors: ['table', 'dog', 'apple', 'shirt', 'car', 'cloud', 'water', 'book']
+  }
 ];
 
 const wordTranslations = {
@@ -241,6 +409,30 @@ const wordTranslations = {
   walking: 'marcher',
   climbing: 'grimper',
   singing: 'chanter',
+  piano: 'piano', guitar: 'guitare', violin: 'violon', drum: 'tambour', flute: 'flûte', trumpet: 'trompette', cello: 'violoncelle', harp: 'harpe',
+  ant: 'fourmi', bee: 'abeille', spider: 'araignée', butterfly: 'papillon', fly: 'mouche', mosquito: 'moustique', beetle: 'scarabée', worm: 'ver',
+  hammer: 'marteau', saw: 'scie', screwdriver: 'tournevis', wrench: 'clé anglaise', drill: 'perceuse', nail: 'clou', pliers: 'pince', axe: 'hache',
+  eagle: 'aigle', pigeon: 'pigeon', owl: 'hibou', parrot: 'perroquet', penguin: 'pingouin', swan: 'cygne', robin: 'rouge-gorge',
+  water: 'eau', milk: 'lait', juice: 'jus', coffee: 'café', tea: 'thé', soda: 'soda', beer: 'bière', wine: 'vin',
+  circle: 'cercle', square: 'carré', triangle: 'triangle', rectangle: 'rectangle', star: 'étoile', heart: 'cœur', diamond: 'diamant', oval: 'ovale',
+  monday: 'lundi', tuesday: 'mardi', wednesday: 'mercredi', thursday: 'jeudi', friday: 'vendredi', saturday: 'samedi', sunday: 'dimanche', weekend: 'week-end',
+  january: 'janvier', february: 'février', march: 'mars', april: 'avril', may: 'mai', june: 'juin', july: 'juillet', august: 'août',
+  mountain: 'montagne', forest: 'forêt', beach: 'plage', desert: 'désert', island: 'île', lake: 'lac', ocean: 'océan',
+  wood: 'bois', metal: 'métal', plastic: 'plastique', glass: 'verre', paper: 'papier', stone: 'pierre', cotton: 'coton', leather: 'cuir',
+  computer: 'ordinateur', phone: 'téléphone', tablet: 'tablette', camera: 'caméra', robot: 'robot', screen: 'écran', keyboard: 'clavier', mouse: 'souris',
+  street: 'rue', park: 'parc', bridge: 'pont', library: 'bibliothèque', hospital: 'hôpital', bank: 'banque', museum: 'musée',
+  bakery: 'boulangerie', pharmacy: 'pharmacie', supermarket: 'supermarché', restaurant: 'restaurant', cafe: 'café', butcher: 'boucherie', bookshop: 'librairie', post_office: 'poste',
+  eye: 'œil', ear: 'oreille', lip: 'lèvre', tooth: 'dent', cheek: 'joue', chin: 'menton',
+  knife: 'couteau', fork: 'fourchette', spoon: 'cuillère', plate: 'assiette', bowl: 'bol', cup: 'tasse', pan: 'poêle',
+  dragon: 'dragon', unicorn: 'licorne', ghost: 'fantôme', fairy: 'fée', monster: 'monstre', giant: 'géant', zombie: 'zombie', vampire: 'vampire',
+  oak: 'chêne', pine: 'pin', rose: 'rose', daisy: 'marguerite', grass: 'herbe', bush: 'buisson', leaf: 'feuille', bamboo: 'bambou',
+  big: 'grand', small: 'petit', tall: 'grand', short: 'court', heavy: 'lourd', light: 'léger', long: 'long', wide: 'large',
+  fast: 'rapide', slow: 'lent', strong: 'fort', weak: 'faible', quick: 'rapide', rapid: 'rapide', brave: 'courageux', afraid: 'effrayé',
+  doll: 'poupée', ball: 'balle', puzzle: 'puzzle', kite: 'cerf-volant', block: 'bloc', game: 'jeu', card: 'carte', dice: 'dé',
+  towel: 'serviette', sand: 'sable', shell: 'coquillage', sun: 'soleil', wave: 'vague', bucket: 'seau', spade: 'pelle', surf: 'surf',
+  wheel: 'roue', engine: 'moteur', door: 'porte', seat: 'siège', brake: 'frein', tire: 'pneu',
+  soap: 'savon', brush: 'brosse', paste: 'dentifrice', comb: 'peigne', sink: 'lavabo', bath: 'bain', shower: 'douche',
+  moon: 'lune', rain: 'pluie', wind: 'vent', snow: 'neige', storm: 'tempête'
 };
 
 const roundDifficultyProfiles = [
@@ -296,7 +488,7 @@ const settings = {
   speakDistance: 110,
   interactDistance: 92,
   coopDistance: 132,
-  maxMistakesBeforeLose: 1,
+  maxMistakesBeforeLose: 2,
 };
 
 const board = document.getElementById('gameBoard');
