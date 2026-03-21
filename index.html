@@ -27,17 +27,30 @@
             <div class="board-hud">
               <div class="instruction-banner">
                 <p id="promptText" class="instruction-text">Charge les bonnes poules.</p>
+                <p id="roundDetailText" class="instruction-detail">3 manches progressives t attendent.</p>
               </div>
-              <div class="heart-hud" aria-label="Erreurs restantes">
-                <div class="heart-slot"><span class="life-heart" data-heart="0">♥</span></div>
-                <div class="heart-slot"><span class="life-heart" data-heart="1">♥</span></div>
-                <div class="heart-slot"><span class="life-heart" data-heart="2">♥</span></div>
+              <div class="hud-side">
+                <div class="heart-hud" aria-label="Erreurs restantes">
+                  <div class="heart-slot"><span class="life-heart" data-heart="0">♥</span></div>
+                </div>
+                <div class="board-stats" aria-live="polite">
+                  <div class="board-stat">
+                    <span class="board-stat-label">Manche</span>
+                    <strong id="roundText">1 / 3</strong>
+                  </div>
+                  <div class="board-stat">
+                    <span class="board-stat-label">Restantes</span>
+                    <strong id="remainingText">0</strong>
+                  </div>
+                  <div class="board-stat">
+                    <span class="board-stat-label">Pile</span>
+                    <strong id="stackText">0</strong>
+                  </div>
+                </div>
               </div>
             </div>
             <div class="sr-metrics" aria-hidden="true">
               <span id="targetWords"></span>
-              <span id="remainingText">0</span>
-              <span id="stackText">0</span>
               <span id="mistakeText">0</span>
             </div>
             <div class="board-frame"></div>
@@ -98,14 +111,84 @@
         <p class="overlay-kicker">Apprenti fermier</p>
         <h2 id="overlayTitle">Ramène les bonnes poules au poulailler</h2>
         <p id="overlayText">
-          Approche-toi d'une poule pour entendre son mot en anglais, prends-la avec E puis
-          dépose toutes les bonnes réponses dans le poulailler.
+          Traverse 3 manches de plus en plus rapides. Approche-toi d'une poule pour entendre
+          son mot en anglais, prends-la avec E puis depose les bonnes reponses dans le
+          poulailler. Le cahier te permet de revoir tous les themes avant ou apres la partie.
         </p>
         <div id="resultPanel" class="result-panel hidden">
           <p id="resultLabel" class="result-label">Victoire</p>
           <div id="overlayStars" class="overlay-stars" aria-label="Score en étoiles"></div>
         </div>
-        <button id="overlayButton" class="primary-button big-button" type="button">Commencer</button>
+        <div id="recapPanel" class="recap-panel hidden">
+          <p class="recap-title">Recap de la partie</p>
+          <div id="recapRounds" class="recap-rounds"></div>
+        </div>
+        <div class="overlay-actions">
+          <button id="overlayNotebookButton" class="soft-button overlay-secondary" type="button">Ouvrir le cahier</button>
+          <button id="overlayButton" class="primary-button big-button" type="button">Commencer</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="notebookOverlay" class="notebook-overlay hidden">
+      <div class="notebook-book" role="dialog" aria-modal="true" aria-labelledby="notebookTitle">
+        <button id="closeNotebookButton" class="notebook-close" type="button">Fermer</button>
+        <div class="notebook-rings" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <div class="notebook-shell">
+          <div class="notebook-head">
+            <div>
+              <p class="overlay-kicker">Cahier anime</p>
+              <h2 id="notebookTitle">Lexique de la ferme</h2>
+              <p class="notebook-subtitle">
+                Un theme par page, avec une vraie double page et une feuille qui se tourne.
+              </p>
+            </div>
+            <div class="notebook-progress">
+              <span id="notebookPageCurrent">1-2</span>
+              <span class="notebook-progress-divider">/</span>
+              <span id="notebookPageTotal">0</span>
+            </div>
+          </div>
+
+          <div class="notebook-spread">
+            <section class="notebook-stage" aria-live="polite">
+              <div class="notebook-page-shadow notebook-page-shadow-left" aria-hidden="true"></div>
+              <div class="notebook-page-shadow notebook-page-shadow-right" aria-hidden="true"></div>
+              <div id="notebookLeftPage" class="notebook-page-surface notebook-page-left">
+                <div class="notebook-page-corner notebook-page-corner-left" aria-hidden="true"></div>
+                <div id="notebookLeftPageBody" class="notebook-page-body"></div>
+              </div>
+              <div class="notebook-book-spine" aria-hidden="true"></div>
+              <div id="notebookRightPage" class="notebook-page-surface notebook-page-right">
+                <div class="notebook-page-corner" aria-hidden="true"></div>
+                <div id="notebookRightPageBody" class="notebook-page-body"></div>
+              </div>
+              <div id="notebookTurnLeaf" class="notebook-turn-leaf hidden" aria-hidden="true">
+                <div class="notebook-turn-face notebook-turn-front">
+                  <div id="notebookTurnFront" class="notebook-page-body"></div>
+                </div>
+                <div class="notebook-turn-face notebook-turn-back">
+                  <div id="notebookTurnBack" class="notebook-page-body"></div>
+                </div>
+              </div>
+            </section>
+          </div>
+
+          <div class="notebook-nav">
+            <button id="notebookPrevButton" class="soft-button notebook-nav-button" type="button">
+              Page precedente
+            </button>
+            <button id="notebookNextButton" class="primary-button notebook-nav-button" type="button">
+              Page suivante
+            </button>
+          </div>
+        </div>
       </div>
     </div>
 

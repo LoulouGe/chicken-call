@@ -113,34 +113,171 @@ const exerciseThemes = [
   },
 ];
 
-const exercisePatterns = [
-  [0, 1, 2, 3],
-  [4, 5, 6, 7],
-  [0, 2, 4, 6],
-  [1, 3, 5, 7],
-  [0, 1, 4, 5],
+const wordTranslations = {
+  red: 'rouge',
+  blue: 'bleu',
+  green: 'vert',
+  yellow: 'jaune',
+  orange: 'orange',
+  purple: 'violet',
+  pink: 'rose',
+  brown: 'marron',
+  cat: 'chat',
+  dog: 'chien',
+  horse: 'cheval',
+  duck: 'canard',
+  rabbit: 'lapin',
+  tiger: 'tigre',
+  lion: 'lion',
+  monkey: 'singe',
+  apple: 'pomme',
+  banana: 'banane',
+  grape: 'raisin',
+  lemon: 'citron',
+  pear: 'poire',
+  peach: 'peche',
+  melon: 'melon',
+  carrot: 'carotte',
+  potato: 'pomme de terre',
+  tomato: 'tomate',
+  onion: 'oignon',
+  pepper: 'poivron',
+  cabbage: 'chou',
+  bean: 'haricot',
+  pea: 'petit pois',
+  book: 'livre',
+  pencil: 'crayon',
+  eraser: 'gomme',
+  ruler: 'regle',
+  marker: 'feutre',
+  notebook: 'cahier',
+  backpack: 'sac a dos',
+  scissors: 'ciseaux',
+  shirt: 'chemise',
+  pants: 'pantalon',
+  shoes: 'chaussures',
+  socks: 'chaussettes',
+  hat: 'chapeau',
+  dress: 'robe',
+  skirt: 'jupe',
+  jacket: 'veste',
+  head: 'tete',
+  hand: 'main',
+  foot: 'pied',
+  arm: 'bras',
+  leg: 'jambe',
+  nose: 'nez',
+  mouth: 'bouche',
+  eyes: 'yeux',
+  mother: 'mere',
+  father: 'pere',
+  sister: 'soeur',
+  brother: 'frere',
+  grandma: 'grand-mere',
+  grandpa: 'grand-pere',
+  uncle: 'oncle',
+  aunt: 'tante',
+  kitchen: 'cuisine',
+  bedroom: 'chambre',
+  bathroom: 'salle de bain',
+  garden: 'jardin',
+  garage: 'garage',
+  attic: 'grenier',
+  balcony: 'balcon',
+  office: 'bureau',
+  chair: 'chaise',
+  table: 'table',
+  sofa: 'canape',
+  bed: 'lit',
+  lamp: 'lampe',
+  mirror: 'miroir',
+  carpet: 'tapis',
+  clock: 'horloge',
+  car: 'voiture',
+  bus: 'bus',
+  train: 'train',
+  bike: 'velo',
+  plane: 'avion',
+  boat: 'bateau',
+  truck: 'camion',
+  subway: 'metro',
+  doctor: 'medecin',
+  teacher: 'professeur',
+  farmer: 'fermier',
+  pilot: 'pilote',
+  chef: 'chef',
+  nurse: 'infirmier',
+  artist: 'artiste',
+  baker: 'boulanger',
+  football: 'football',
+  tennis: 'tennis',
+  swimming: 'natation',
+  running: 'course',
+  jumping: 'saut',
+  cycling: 'cyclisme',
+  dancing: 'danse',
+  skating: 'patinage',
+  sunny: 'ensoleille',
+  rainy: 'pluvieux',
+  windy: 'venteux',
+  cloudy: 'nuageux',
+  snowy: 'enneige',
+  stormy: 'orageux',
+  foggy: 'brumeux',
+  icy: 'gele',
+  happy: 'heureux',
+  sad: 'triste',
+  angry: 'en colere',
+  scared: 'effraye',
+  tired: 'fatigue',
+  calm: 'calme',
+  proud: 'fier',
+  shy: 'timide',
+  reading: 'lire',
+  writing: 'ecrire',
+  sleeping: 'dormir',
+  eating: 'manger',
+  playing: 'jouer',
+  walking: 'marcher',
+  climbing: 'grimper',
+  singing: 'chanter',
+};
+
+const roundDifficultyProfiles = [
+  {
+    label: 'Echauffement',
+    targetIndexes: [0, 1, 2],
+    distractorOffset: 0,
+    distractorCount: 4,
+    chickenSpeed: 34,
+    speakDistance: 138,
+    interactDistance: 98,
+    bubbleDuration: 3600,
+    speechRate: 0.84,
+  },
+  {
+    label: 'Entrainement',
+    targetIndexes: [0, 2, 4, 6],
+    distractorOffset: 2,
+    distractorCount: 5,
+    chickenSpeed: 52,
+    speakDistance: 118,
+    interactDistance: 92,
+    bubbleDuration: 2900,
+    speechRate: 0.94,
+  },
+  {
+    label: 'Sprint final',
+    targetIndexes: [1, 2, 3, 5, 7],
+    distractorOffset: 4,
+    distractorCount: 6,
+    chickenSpeed: 70,
+    speakDistance: 102,
+    interactDistance: 86,
+    bubbleDuration: 2200,
+    speechRate: 1.02,
+  },
 ];
-
-function buildExerciseBank() {
-  return exerciseThemes.flatMap((theme) =>
-    exercisePatterns.map((pattern, patternIndex) => {
-      const targets = pattern.map((index) => theme.targets[index]);
-      const distractors = theme.distractors
-        .slice(patternIndex, patternIndex + 5)
-        .concat(theme.distractors.slice(0, patternIndex))
-        .slice(0, 5);
-      return {
-        prompt: theme.prompt,
-        hint: `${theme.hint} Cette manche attend: ${targets.join(', ')}.`,
-        targets,
-        pool: shuffle([...targets, ...distractors]),
-        requiredCount: targets.length,
-      };
-    })
-  );
-}
-
-const exerciseBank = buildExerciseBank();
 
 const settings = {
   width: 1000,
@@ -155,11 +292,11 @@ const settings = {
   playerSpeed: 190,
   chickenBaseSpeed: 34,
   chickenSpeedStep: 12,
-  roundsPerGame: 1,
+  roundsPerGame: 3,
   speakDistance: 110,
   interactDistance: 92,
   coopDistance: 132,
-  maxMistakesBeforeLose: 3,
+  maxMistakesBeforeLose: 1,
 };
 
 const board = document.getElementById('gameBoard');
@@ -176,10 +313,25 @@ const overlay = document.getElementById('overlay');
 const overlayTitle = document.getElementById('overlayTitle');
 const overlayText = document.getElementById('overlayText');
 const overlayButton = document.getElementById('overlayButton');
+const overlayNotebookButton = document.getElementById('overlayNotebookButton');
 const resultPanel = document.getElementById('resultPanel');
 const resultLabel = document.getElementById('resultLabel');
 const overlayStars = document.getElementById('overlayStars');
+const recapPanel = document.getElementById('recapPanel');
+const recapRounds = document.getElementById('recapRounds');
+const notebookOverlay = document.getElementById('notebookOverlay');
+const notebookPageCurrent = document.getElementById('notebookPageCurrent');
+const notebookPageTotal = document.getElementById('notebookPageTotal');
+const notebookLeftPageBody = document.getElementById('notebookLeftPageBody');
+const notebookRightPageBody = document.getElementById('notebookRightPageBody');
+const notebookTurnLeaf = document.getElementById('notebookTurnLeaf');
+const notebookTurnFront = document.getElementById('notebookTurnFront');
+const notebookTurnBack = document.getElementById('notebookTurnBack');
+const notebookPrevButton = document.getElementById('notebookPrevButton');
+const notebookNextButton = document.getElementById('notebookNextButton');
+const closeNotebookButton = document.getElementById('closeNotebookButton');
 const promptText = document.getElementById('promptText');
+const roundDetailText = document.getElementById('roundDetailText');
 const targetWords = document.getElementById('targetWords');
 const roundText = document.getElementById('roundText');
 const remainingText = document.getElementById('remainingText');
@@ -216,6 +368,11 @@ const state = {
   muted: false,
   depositing: false,
   gameFinished: false,
+  roundReports: [],
+  notebookOpen: false,
+  resumeAfterNotebook: false,
+  notebookSpreadIndex: 0,
+  notebookAnimating: false,
 };
 
 function clamp(value, min, max) {
@@ -251,18 +408,51 @@ function normalize(vector) {
   return { x: vector.x / magnitude, y: vector.y / magnitude };
 }
 
+function getTranslation(word) {
+  return wordTranslations[word] || word;
+}
+
 function getCurrentRound() {
   return state.sessionRounds[state.roundIndex];
 }
 
+function buildSessionRound(theme, roundIndex) {
+  const profile =
+    roundDifficultyProfiles[Math.min(roundIndex, roundDifficultyProfiles.length - 1)];
+  const targets = profile.targetIndexes.map((index) => theme.targets[index]).filter(Boolean);
+  const distractors = theme.distractors
+    .slice(profile.distractorOffset)
+    .concat(theme.distractors.slice(0, profile.distractorOffset))
+    .slice(0, profile.distractorCount);
+
+  return {
+    prompt: theme.prompt,
+    detail: `${profile.label} · Theme : ${capitalize(theme.label)}`,
+    themeLabel: theme.label,
+    difficultyLabel: profile.label,
+    hint: `${theme.hint} Cette manche attend: ${targets.join(', ')}.`,
+    targets,
+    pool: shuffle([...targets, ...distractors]),
+    requiredCount: targets.length,
+    chickenCount: targets.length + distractors.length,
+    chickenSpeed: profile.chickenSpeed,
+    speakDistance: profile.speakDistance,
+    interactDistance: profile.interactDistance,
+    bubbleDuration: profile.bubbleDuration,
+    speechRate: profile.speechRate,
+  };
+}
+
 function pickSessionRounds() {
-  return shuffle(
-    exerciseBank.map((round) => ({
-      ...round,
-      targets: [...round.targets],
-      pool: [...round.pool],
+  const pickedThemes = shuffle(
+    exerciseThemes.map((theme) => ({
+      ...theme,
+      targets: [...theme.targets],
+      distractors: [...theme.distractors],
     }))
   ).slice(0, settings.roundsPerGame);
+
+  return pickedThemes.map((theme, index) => buildSessionRound(theme, index));
 }
 
 function clearGameTimers() {
@@ -302,6 +492,287 @@ function setResultPanel(visible, label = '', stars = 0) {
     resultLabel.textContent = label;
     renderStars(stars);
   }
+}
+
+function setRecapVisible(visible) {
+  if (!recapPanel) {
+    return;
+  }
+  recapPanel.classList.toggle('hidden', !visible);
+}
+
+function clearRecap() {
+  if (!recapRounds) {
+    return;
+  }
+  recapRounds.innerHTML = '';
+}
+
+function createRoundReport(round, roundIndex) {
+  return {
+    title: `Manche ${roundIndex + 1} · ${capitalize(round.themeLabel)}`,
+    prompt: round.prompt,
+    targets: round.targets.map((word) => ({ word, found: false })),
+    wrongWords: [],
+  };
+}
+
+function getCurrentRoundReport() {
+  return state.roundReports[state.roundIndex];
+}
+
+function markTargetFound(word) {
+  const report = getCurrentRoundReport();
+  const entry = report?.targets.find((target) => target.word === word);
+  if (entry) {
+    entry.found = true;
+  }
+}
+
+function markWrongWord(word) {
+  const report = getCurrentRoundReport();
+  if (report) {
+    report.wrongWords.push(word);
+  }
+}
+
+function renderRecap() {
+  if (!recapRounds) {
+    return;
+  }
+
+  clearRecap();
+
+  state.roundReports.filter(Boolean).forEach((report, index) => {
+    const roundCard = document.createElement('section');
+    roundCard.className = 'recap-round';
+
+    const title = document.createElement('p');
+    title.className = 'recap-round-title';
+    title.textContent = report.title || (state.roundReports.length > 1 ? `Manche ${index + 1}` : 'Mots de la manche');
+    roundCard.appendChild(title);
+
+    const wordList = document.createElement('div');
+    wordList.className = 'recap-word-list';
+
+    report.targets.forEach((target) => {
+      const badge = document.createElement('span');
+      badge.className = `recap-word ${target.found ? 'found' : 'missed'}`;
+      badge.textContent = target.word;
+      wordList.appendChild(badge);
+    });
+
+    roundCard.appendChild(wordList);
+
+    const note = document.createElement('p');
+    note.className = 'recap-round-note';
+    note.textContent = report.prompt;
+    roundCard.appendChild(note);
+
+    if (report.wrongWords.length > 0) {
+      const errorTitle = document.createElement('p');
+      errorTitle.className = 'recap-error-title';
+      errorTitle.textContent = 'Poules deposees par erreur';
+      roundCard.appendChild(errorTitle);
+
+      const errorList = document.createElement('div');
+      errorList.className = 'recap-error-list';
+
+      report.wrongWords.forEach((word) => {
+        const errorBadge = document.createElement('span');
+        errorBadge.className = 'recap-error';
+        errorBadge.textContent = word;
+        errorList.appendChild(errorBadge);
+      });
+
+      roundCard.appendChild(errorList);
+    }
+
+    recapRounds.appendChild(roundCard);
+  });
+}
+
+function escapeHtml(text) {
+  return text
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#39;');
+}
+
+function buildNotebookPageMarkup(theme, index) {
+  if (!theme) {
+    return `
+      <div class="notebook-page-header">
+        <span class="notebook-topic-badge">Pause</span>
+        <span class="notebook-page-number">Page ${index + 1}</span>
+      </div>
+      <h3 class="notebook-page-title">Page blanche</h3>
+      <p class="notebook-page-note">Cette feuille attend la prochaine lecon du poulailler.</p>
+      <div class="notebook-empty-state"></div>
+      <p class="notebook-page-footer">Tourne la page pour continuer le cahier.</p>
+    `;
+  }
+
+  const words = theme.targets
+    .map(
+      (word, wordIndex) => `
+        <div class="notebook-word-row">
+          <span class="notebook-word-index">${String(wordIndex + 1).padStart(2, '0')}</span>
+          <span class="notebook-word-term">${escapeHtml(capitalize(word))}</span>
+          <span class="notebook-word-translation">${escapeHtml(capitalize(getTranslation(word)))}</span>
+        </div>`
+    )
+    .join('');
+
+  return `
+    <div class="notebook-page-header">
+      <span class="notebook-topic-badge">Theme ${index + 1}</span>
+      <span class="notebook-page-number">Page ${index + 1}</span>
+    </div>
+    <h3 class="notebook-page-title">${escapeHtml(capitalize(theme.label))}</h3>
+    <p class="notebook-page-note">${escapeHtml(theme.prompt)}</p>
+    <div class="notebook-word-list">${words}</div>
+    <p class="notebook-page-footer">Relis les mots, memorise-les, puis retourne sauver les poules.</p>
+  `;
+}
+
+function getNotebookSpreadCount() {
+  return Math.ceil(exerciseThemes.length / 2);
+}
+
+function getNotebookSpreadThemes(spreadIndex) {
+  const leftIndex = spreadIndex * 2;
+  const rightIndex = leftIndex + 1;
+  return {
+    leftTheme: exerciseThemes[leftIndex] || null,
+    leftIndex,
+    rightTheme: exerciseThemes[rightIndex] || null,
+    rightIndex,
+  };
+}
+
+function updateNotebookControls() {
+  const { leftIndex, rightIndex, rightTheme } = getNotebookSpreadThemes(state.notebookSpreadIndex);
+
+  if (notebookPageCurrent) {
+    notebookPageCurrent.textContent = rightTheme ? `${leftIndex + 1}-${rightIndex + 1}` : `${leftIndex + 1}`;
+  }
+  if (notebookPageTotal) {
+    notebookPageTotal.textContent = `${exerciseThemes.length}`;
+  }
+
+  if (notebookPrevButton) {
+    notebookPrevButton.disabled = state.notebookAnimating || state.notebookSpreadIndex === 0;
+  }
+  if (notebookNextButton) {
+    notebookNextButton.disabled =
+      state.notebookAnimating || state.notebookSpreadIndex >= getNotebookSpreadCount() - 1;
+  }
+}
+
+function setNotebookSpread(spreadIndex) {
+  const boundedIndex = clamp(spreadIndex, 0, getNotebookSpreadCount() - 1);
+  state.notebookSpreadIndex = boundedIndex;
+
+  const { leftTheme, leftIndex, rightTheme, rightIndex } = getNotebookSpreadThemes(boundedIndex);
+
+  if (notebookLeftPageBody) {
+    notebookLeftPageBody.innerHTML = buildNotebookPageMarkup(leftTheme, leftIndex);
+  }
+  if (notebookRightPageBody) {
+    notebookRightPageBody.innerHTML = buildNotebookPageMarkup(rightTheme, rightIndex);
+  }
+
+  updateNotebookControls();
+}
+
+function animateNotebookToSpread(targetSpreadIndex) {
+  const boundedIndex = clamp(targetSpreadIndex, 0, getNotebookSpreadCount() - 1);
+  if (boundedIndex === state.notebookSpreadIndex || state.notebookAnimating) {
+    return;
+  }
+
+  if (!notebookTurnLeaf || !notebookTurnFront || !notebookTurnBack) {
+    setNotebookSpread(boundedIndex);
+    return;
+  }
+
+  const currentSpread = getNotebookSpreadThemes(state.notebookSpreadIndex);
+  const targetSpread = getNotebookSpreadThemes(boundedIndex);
+  const isNext = boundedIndex > state.notebookSpreadIndex;
+
+  if (isNext) {
+    notebookTurnFront.innerHTML = buildNotebookPageMarkup(currentSpread.rightTheme, currentSpread.rightIndex);
+    notebookTurnBack.innerHTML = buildNotebookPageMarkup(targetSpread.leftTheme, targetSpread.leftIndex);
+  } else {
+    notebookTurnFront.innerHTML = buildNotebookPageMarkup(currentSpread.leftTheme, currentSpread.leftIndex);
+    notebookTurnBack.innerHTML = buildNotebookPageMarkup(targetSpread.rightTheme, targetSpread.rightIndex);
+  }
+
+  state.notebookAnimating = true;
+  updateNotebookControls();
+
+  notebookTurnLeaf.classList.remove('hidden', 'is-turning-next', 'is-turning-prev', 'is-on-left', 'is-on-right');
+  notebookTurnLeaf.classList.add(isNext ? 'is-on-right' : 'is-on-left');
+  void notebookTurnLeaf.offsetWidth;
+  notebookTurnLeaf.classList.add(isNext ? 'is-turning-next' : 'is-turning-prev');
+
+  notebookTurnLeaf.addEventListener(
+    'animationend',
+    () => {
+      notebookTurnLeaf.classList.add('hidden');
+      notebookTurnLeaf.classList.remove('is-turning-next', 'is-turning-prev', 'is-on-left', 'is-on-right');
+      state.notebookAnimating = false;
+      setNotebookSpread(boundedIndex);
+    },
+    { once: true }
+  );
+}
+
+function renderNotebook() {
+  if (!notebookLeftPageBody || !notebookRightPageBody) {
+    return;
+  }
+
+  setNotebookSpread(0);
+}
+
+function openNotebook() {
+  if (!notebookOverlay || state.notebookOpen) {
+    return;
+  }
+  if (overlay.classList.contains('hidden')) {
+    return;
+  }
+
+  state.resumeAfterNotebook = state.running && overlay.classList.contains('hidden');
+  state.notebookOpen = true;
+  state.running = false;
+  state.keys.clear();
+  window.speechSynthesis?.cancel();
+  updateNotebookControls();
+  notebookOverlay.classList.remove('hidden');
+}
+
+function closeNotebook() {
+  if (!notebookOverlay || !state.notebookOpen) {
+    return;
+  }
+
+  notebookOverlay.classList.add('hidden');
+  state.notebookOpen = false;
+  state.notebookAnimating = false;
+  notebookTurnLeaf?.classList.add('hidden');
+  notebookTurnLeaf?.classList.remove('is-turning-next', 'is-turning-prev', 'is-on-left', 'is-on-right');
+
+  if (state.resumeAfterNotebook && overlay.classList.contains('hidden') && !state.gameFinished) {
+    state.running = true;
+    state.lastFrame = performance.now();
+  }
+
+  state.resumeAfterNotebook = false;
 }
 
 function updateLifeHearts() {
@@ -359,17 +830,10 @@ function spawnRound() {
   hideBubble();
 
   const round = getCurrentRound();
-  const words = shuffle([...round.pool]).slice(0, settings.chickenCount);
-  const chosenTargetIds = new Set();
+  state.roundReports[state.roundIndex] = createRoundReport(round, state.roundIndex);
+  const words = shuffle([...round.pool]).slice(0, round.chickenCount);
 
-  words.forEach((word, index) => {
-    const isTarget = round.targets.includes(word);
-    if (isTarget && chosenTargetIds.size < round.requiredCount) {
-      chosenTargetIds.add(index);
-    }
-  });
-
-  for (let i = 0; i < settings.chickenCount; i += 1) {
+  for (let i = 0; i < words.length; i += 1) {
     const word = words[i];
     const isTarget = round.targets.includes(word);
     const chicken = {
@@ -410,6 +874,9 @@ function updateRoundUI() {
   const round = getCurrentRound();
   const remaining = round.requiredCount - state.rescuedThisRound;
   promptText.textContent = round.prompt;
+  if (roundDetailText) {
+    roundDetailText.textContent = `Manche ${state.roundIndex + 1} / ${state.sessionRounds.length} · ${round.detail}`;
+  }
   targetWords.textContent = `Mots attendus: ${round.targets.join(', ')}`;
   if (roundText) {
     roundText.textContent = `${state.roundIndex + 1} / ${state.sessionRounds.length}`;
@@ -424,11 +891,12 @@ function updateRoundUI() {
 }
 
 function showBubble(text, chicken) {
+  const round = getCurrentRound();
   messageBubble.textContent = text;
   messageBubble.classList.remove('hidden');
   messageBubble.style.left = `${toScreenX(chicken.x)}px`;
   messageBubble.style.top = `${toScreenY(chicken.y) - 20}px`;
-  state.bubbleUntil = performance.now() + 3000;
+  state.bubbleUntil = performance.now() + (round?.bubbleDuration || 3000);
   state.currentBubbleChickenId = chicken.id;
 }
 
@@ -484,14 +952,14 @@ function playPickupSound() {
   playTone('sine', 480, 0.08, 0.025);
 }
 
-function speakWord(word) {
+function speakWord(word, rate = 0.9) {
   if (!('speechSynthesis' in window)) {
     return;
   }
   window.speechSynthesis.cancel();
   const utterance = new SpeechSynthesisUtterance(word);
   utterance.lang = 'en-US';
-  utterance.rate = 0.9;
+  utterance.rate = rate;
   utterance.pitch = 1.4;
   window.speechSynthesis.speak(utterance);
 }
@@ -514,16 +982,17 @@ function nearestFreeChicken() {
 
 function updateSpeaker(now) {
   const nearest = nearestFreeChicken();
+  const round = getCurrentRound();
 
   for (const chicken of state.chickens) {
     chicken.node?.classList.remove('is-speaking');
   }
 
-  if (nearest.chicken && nearest.distance <= settings.speakDistance) {
+  if (nearest.chicken && nearest.distance <= (round?.speakDistance || settings.speakDistance)) {
     nearest.chicken.node?.classList.add('is-speaking');
     if (state.lastSpokenChickenId !== nearest.chicken.id) {
       showBubble(capitalize(nearest.chicken.word), nearest.chicken);
-      speakWord(nearest.chicken.word);
+      speakWord(nearest.chicken.word, round?.speechRate || 0.9);
       state.lastSpokenChickenId = nearest.chicken.id;
     } else if (state.currentBubbleChickenId === nearest.chicken.id) {
       messageBubble.style.left = `${toScreenX(nearest.chicken.x)}px`;
@@ -575,7 +1044,8 @@ function updateChicken(chicken, dt) {
     chicken.vy = Math.sin(angle);
   }
 
-  const speed = settings.chickenBaseSpeed + state.roundIndex * settings.chickenSpeedStep;
+  const round = getCurrentRound();
+  const speed = round?.chickenSpeed || (settings.chickenBaseSpeed + state.roundIndex * settings.chickenSpeedStep);
   chicken.x += chicken.vx * speed * dt;
   chicken.y += chicken.vy * speed * dt;
 
@@ -643,8 +1113,9 @@ function tryPickup() {
   }
 
   initAudio();
+  const round = getCurrentRound();
   const nearest = nearestFreeChicken();
-  if (nearest.chicken && nearest.distance <= settings.interactDistance) {
+  if (nearest.chicken && nearest.distance <= (round?.interactDistance || settings.interactDistance)) {
     pickupChicken(nearest.chicken);
   } else {
     showFlash('Approche-toi d une poule');
@@ -718,10 +1189,12 @@ function processDeliveredChicken(chicken) {
   if (chicken.isTarget) {
     chicken.delivered = true;
     state.rescuedThisRound += 1;
+    markTargetFound(chicken.word);
     playSuccessSound();
     showFlash(`Oui: ${capitalize(chicken.word)}`, 'success');
   } else {
     state.mistakes += 1;
+    markWrongWord(chicken.word);
     playErrorSound();
     showFlash(`Non: ${capitalize(chicken.word)}`, 'danger');
     chicken.x = randomPlayableX(28);
@@ -748,7 +1221,7 @@ function checkRoundProgress() {
       finishGame(true);
     } else {
       state.roundIndex += 1;
-      showFlash('Nouvelle manche');
+      showFlash(`Manche ${state.roundIndex + 1}`);
       spawnRound();
     }
   }
@@ -773,25 +1246,31 @@ function finishGame(victory) {
   const stars = victory ? Math.max(1, 3 - state.mistakes) : 0;
   if (victory) {
     overlayTitle.textContent = 'Mission accomplie';
-    overlayText.textContent = `Tu as reussi l exercice avec ${state.mistakes} erreur(s).`;
+    overlayText.textContent = `Tu as termine les ${state.sessionRounds.length} manches avec ${state.mistakes} erreur(s).`;
     setResultPanel(true, 'Victoire', stars);
     overlayButton.textContent = 'Rejouer';
   } else {
     overlayTitle.textContent = 'Les poules se sont echappees';
-    overlayText.textContent = `Tu as atteint ${state.mistakes} erreurs. A la troisieme erreur, la partie est perdue.`;
+    overlayText.textContent = `La partie s arrete a la manche ${state.roundIndex + 1}. Tu as atteint ${state.mistakes} erreurs.`;
     setResultPanel(true, 'Defaite', stars);
     overlayButton.textContent = 'Recommencer';
   }
+  renderRecap();
+  setRecapVisible(true);
   overlay.classList.remove('hidden');
 }
 
 function startGame() {
+  closeNotebook();
   state.gameFinished = false;
   state.roundIndex = 0;
   state.sessionRounds = pickSessionRounds();
   state.mistakes = 0;
   state.hintsUsed = 0;
+  state.roundReports = [];
   setResultPanel(false);
+  setRecapVisible(false);
+  clearRecap();
   if (hintText) {
     hintText.textContent = "Appuie sur H ou sur le bouton pour afficher l'indice.";
   }
@@ -805,14 +1284,18 @@ function showHowToPlay() {
   state.running = false;
   overlayTitle.textContent = 'Comment jouer';
   overlayText.textContent =
-    'Tu joues une seule manche par partie. Approche-toi d une poule pour lire et entendre son mot, porte-la avec E puis depose les bonnes au poulailler. A la troisieme erreur, la partie est perdue.';
+    'Tu joues 3 manches par partie. Approche-toi d une poule pour lire et entendre son mot, porte-la avec E puis depose les bonnes au poulailler. Plus tu avances, plus les poules sont rapides. Le cahier reste disponible sur l ecran d accueil et l ecran de fin.';
   setResultPanel(false);
+  setRecapVisible(false);
   overlayButton.textContent = state.gameFinished ? 'Rejouer' : 'Continuer';
   overlay.classList.remove('hidden');
 }
 
 function useHint() {
   const round = getCurrentRound();
+  if (!round) {
+    return;
+  }
   state.hintsUsed += 1;
   if (hintText) {
     hintText.textContent = round.hint;
@@ -823,6 +1306,7 @@ function useHint() {
 function resetGame() {
   clearGameTimers();
   window.speechSynthesis?.cancel();
+  closeNotebook();
   startGame();
 }
 
@@ -844,6 +1328,36 @@ function frame(now) {
 
 function handleKeyDown(event) {
   const key = event.key.toLowerCase();
+  if (key === 'escape' && state.notebookOpen) {
+    event.preventDefault();
+    closeNotebook();
+    return;
+  }
+  if (key === 'n') {
+    if (overlay.classList.contains('hidden') && !state.notebookOpen) {
+      return;
+    }
+    event.preventDefault();
+    if (state.notebookOpen) {
+      closeNotebook();
+    } else {
+      openNotebook();
+    }
+    return;
+  }
+  if (state.notebookOpen) {
+    if (key === 'arrowright' || key === 'd') {
+      event.preventDefault();
+      animateNotebookToSpread(state.notebookSpreadIndex + 1);
+      return;
+    }
+    if (key === 'arrowleft' || key === 'q' || key === 'a') {
+      event.preventDefault();
+      animateNotebookToSpread(state.notebookSpreadIndex - 1);
+      return;
+    }
+    return;
+  }
   if (key === 'e') {
     event.preventDefault();
     tryPickup();
@@ -877,6 +1391,9 @@ function handleKeyDown(event) {
 }
 
 function handleKeyUp(event) {
+  if (state.notebookOpen) {
+    return;
+  }
   state.keys.delete(event.key.toLowerCase());
 }
 
@@ -959,6 +1476,15 @@ overlayButton.addEventListener('click', () => {
     state.running = true;
   }
 });
+overlayNotebookButton?.addEventListener('click', openNotebook);
+closeNotebookButton?.addEventListener('click', closeNotebook);
+notebookPrevButton?.addEventListener('click', () => animateNotebookToSpread(state.notebookSpreadIndex - 1));
+notebookNextButton?.addEventListener('click', () => animateNotebookToSpread(state.notebookSpreadIndex + 1));
+notebookOverlay?.addEventListener('click', (event) => {
+  if (event.target === notebookOverlay) {
+    closeNotebook();
+  }
+});
 
 hintButton?.addEventListener('click', useHint);
 restartButton?.addEventListener('click', resetGame);
@@ -969,6 +1495,7 @@ window.addEventListener('blur', () => state.keys.clear());
 
 bindTouchControls();
 setupDesktopActionLabels();
+renderNotebook();
 state.sessionRounds = pickSessionRounds();
 spawnRound();
 state.running = false;
