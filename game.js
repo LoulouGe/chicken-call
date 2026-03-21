@@ -168,6 +168,10 @@ const stackAnchor = document.getElementById('stackAnchor');
 const coopNode = document.getElementById('coop');
 const messageBubble = document.getElementById('messageBubble');
 const flashText = document.getElementById('flashText');
+const joystickBase = document.getElementById('joystickBase');
+const joystickKnob = document.getElementById('joystickKnob');
+const pickupButton = document.getElementById('pickupButton');
+const dropButton = document.getElementById('dropButton');
 const overlay = document.getElementById('overlay');
 const overlayTitle = document.getElementById('overlayTitle');
 const overlayText = document.getElementById('overlayText');
@@ -185,6 +189,8 @@ const hintText = document.getElementById('hintText');
 const hintButton = document.getElementById('hintButton');
 const restartButton = document.getElementById('restartButton');
 const howToButton = document.getElementById('howToButton');
+const isMacDesktop =
+  /Mac/i.test(navigator.platform || navigator.userAgent) && (navigator.maxTouchPoints || 0) <= 1;
 
 const state = {
   running: false,
@@ -196,7 +202,8 @@ const state = {
   mistakes: 0,
   hintsUsed: 0,
   keys: new Set(),
-  touchDirs: new Set(),
+  touchVector: { x: 0, y: 0 },
+  joystickPointerId: null,
   lastFrame: 0,
   player: { x: 480, y: 420 },
   coop: { x: 828, y: 188 },
@@ -527,6 +534,7 @@ function updatePlayer() {
   playerNode.style.left = `${toScreenX(state.player.x)}px`;
   playerNode.style.top = `${toScreenY(state.player.y)}px`;
   playerNode.style.zIndex = `${100 + Math.round(state.player.y)}`;
+  updateCoopGlow();
   updateCarriedStack();
 }
 
@@ -576,11 +584,11 @@ function updateChicken(chicken, dt) {
 function movePlayer(dt) {
   let x = 0;
   let y = 0;
-  const active = new Set([...state.keys, ...state.touchDirs]);
+  const active = new Set([...state.keys]);
   if (active.has('arrowup') || active.has('z') || active.has('w')) {
     y -= 1;
   }
-  if (active.has('arrowdown') || active.has('s')) {
+  if (active.has('arrowdown') || (!isMacDesktop && active.has('s'))) {
     y += 1;
   }
   if (active.has('arrowleft') || active.has('q') || active.has('a')) {
@@ -589,6 +597,9 @@ function movePlayer(dt) {
   if (active.has('arrowright') || active.has('d')) {
     x += 1;
   }
+
+  x += state.touchVector.x;
+  y += state.touchVector.y;
 
   if (!x && !y) {
     return;
@@ -607,19 +618,43 @@ function tryInteract() {
     return;
   }
 
-  initAudio();
+  if (state.carried.length > 0) {
+    tryDrop();
+  } else {
+    tryPickup();
+  }
+}
 
-  const coopDistance = distance(state.player, state.coop);
-  if (coopDistance <= settings.coopDistance && state.carried.length > 0) {
-    depositCarried();
+function tryPickup() {
+  if (!state.running || state.depositing) {
     return;
   }
 
+  initAudio();
   const nearest = nearestFreeChicken();
   if (nearest.chicken && nearest.distance <= settings.interactDistance) {
     pickupChicken(nearest.chicken);
   } else {
-    showFlash('Approche-toi d une poule ou du poulailler');
+    showFlash('Approche-toi d une poule');
+  }
+}
+
+function tryDrop() {
+  if (!state.running || state.depositing) {
+    return;
+  }
+
+  if (state.carried.length === 0) {
+    showFlash('Tu ne portes aucune poule');
+    return;
+  }
+
+  initAudio();
+  const coopDistance = distance(state.player, state.coop);
+  if (coopDistance <= settings.coopDistance) {
+    depositTopChicken();
+  } else {
+    dropTopChickenAtPlayer();
   }
 }
 
@@ -633,25 +668,35 @@ function pickupChicken(chicken) {
   updateRoundUI();
 }
 
-function depositCarried() {
+function depositTopChicken() {
   state.depositing = true;
-  const queue = [...state.carried].reverse();
-  state.carried = [];
+  const chicken = state.carried.pop();
   updateRoundUI();
-
-  let delay = 0;
-  for (const chicken of queue) {
-    schedule(() => {
-      processDeliveredChicken(chicken);
-      updateCarriedStack();
-    }, delay);
-    delay += 420;
-  }
-
+  processDeliveredChicken(chicken);
+  updateCarriedStack();
   schedule(() => {
     state.depositing = false;
     checkRoundProgress();
-  }, delay + 120);
+  }, 180);
+}
+
+function dropTopChickenAtPlayer() {
+  const chicken = state.carried.pop();
+  if (!chicken) {
+    return;
+  }
+
+  removeCarriedElement(chicken);
+  chicken.carried = false;
+  chicken.delivered = false;
+  chicken.x = clamp(state.player.x + randomBetween(-28, 28), settings.playArea.left, settings.playArea.right);
+  chicken.y = clamp(state.player.y + randomBetween(-12, 20), settings.playArea.top, settings.playArea.bottom);
+  chicken.vx = randomBetween(-1, 1);
+  chicken.vy = randomBetween(-1, 1);
+  createChickenElement(chicken);
+  showFlash(`${capitalize(chicken.word)} reposee`);
+  updateRoundUI();
+  updateCarriedStack();
 }
 
 function processDeliveredChicken(chicken) {
@@ -695,6 +740,14 @@ function checkRoundProgress() {
       spawnRound();
     }
   }
+}
+
+function updateCoopGlow() {
+  if (!coopNode) {
+    return;
+  }
+  const canDeposit = state.carried.length > 0 && distance(state.player, state.coop) <= settings.coopDistance;
+  coopNode.classList.toggle('can-deposit', canDeposit);
 }
 
 function finishGame(victory) {
@@ -781,7 +834,12 @@ function handleKeyDown(event) {
   const key = event.key.toLowerCase();
   if (key === 'e') {
     event.preventDefault();
-    tryInteract();
+    tryPickup();
+    return;
+  }
+  if (isMacDesktop && key === 's') {
+    event.preventDefault();
+    tryDrop();
     return;
   }
   if (key === 'h') {
@@ -811,29 +869,73 @@ function handleKeyUp(event) {
 }
 
 function bindTouchControls() {
-  document.querySelectorAll('[data-dir]').forEach((button) => {
-    const dir = button.getAttribute('data-dir');
-    const start = (event) => {
-      event.preventDefault();
-      state.touchDirs.add(dirToKey(dir));
-    };
-    const end = (event) => {
-      event.preventDefault();
-      state.touchDirs.delete(dirToKey(dir));
-    };
-    button.addEventListener('pointerdown', start);
-    button.addEventListener('pointerup', end);
-    button.addEventListener('pointerleave', end);
-    button.addEventListener('pointercancel', end);
-  });
+  if (joystickBase && joystickKnob) {
+    const moveKnob = (clientX, clientY) => {
+      const rect = joystickBase.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+      const rawX = clientX - centerX;
+      const rawY = clientY - centerY;
+      const maxRadius = rect.width * 0.32;
+      const magnitude = Math.hypot(rawX, rawY);
+      const limited = magnitude > maxRadius && magnitude > 0
+        ? { x: (rawX / magnitude) * maxRadius, y: (rawY / magnitude) * maxRadius }
+        : { x: rawX, y: rawY };
 
-  document.querySelectorAll('[data-action="interact"]').forEach((button) => {
-    button.addEventListener('click', tryInteract);
-  });
+      joystickKnob.style.transform = `translate(${limited.x}px, ${limited.y}px)`;
+      state.touchVector.x = limited.x / maxRadius;
+      state.touchVector.y = limited.y / maxRadius;
+    };
+
+    const resetJoystick = () => {
+      state.touchVector.x = 0;
+      state.touchVector.y = 0;
+      state.joystickPointerId = null;
+      joystickKnob.style.transform = 'translate(0, 0)';
+    };
+
+    joystickBase.addEventListener('pointerdown', (event) => {
+      event.preventDefault();
+      state.joystickPointerId = event.pointerId;
+      joystickBase.setPointerCapture(event.pointerId);
+      moveKnob(event.clientX, event.clientY);
+    });
+
+    joystickBase.addEventListener('pointermove', (event) => {
+      if (state.joystickPointerId !== event.pointerId) {
+        return;
+      }
+      event.preventDefault();
+      moveKnob(event.clientX, event.clientY);
+    });
+
+    const endJoystick = (event) => {
+      if (state.joystickPointerId !== event.pointerId) {
+        return;
+      }
+      event.preventDefault();
+      resetJoystick();
+    };
+
+    joystickBase.addEventListener('pointerup', endJoystick);
+    joystickBase.addEventListener('pointercancel', endJoystick);
+    joystickBase.addEventListener('lostpointercapture', resetJoystick);
+  }
+
+  pickupButton?.addEventListener('click', tryPickup);
+  dropButton?.addEventListener('click', tryDrop);
 }
 
-function dirToKey(dir) {
-  return `arrow${dir}`;
+function setupDesktopActionLabels() {
+  if (!isMacDesktop) {
+    return;
+  }
+  if (pickupButton) {
+    pickupButton.textContent = 'Prendre (E)';
+  }
+  if (dropButton) {
+    dropButton.textContent = 'Deposer (S)';
+  }
 }
 
 overlayButton.addEventListener('click', () => {
@@ -847,13 +949,14 @@ overlayButton.addEventListener('click', () => {
 });
 
 hintButton?.addEventListener('click', useHint);
-restartButton.addEventListener('click', resetGame);
-howToButton.addEventListener('click', showHowToPlay);
+restartButton?.addEventListener('click', resetGame);
+howToButton?.addEventListener('click', showHowToPlay);
 window.addEventListener('keydown', handleKeyDown);
 window.addEventListener('keyup', handleKeyUp);
 window.addEventListener('blur', () => state.keys.clear());
 
 bindTouchControls();
+setupDesktopActionLabels();
 state.sessionRounds = pickSessionRounds();
 spawnRound();
 state.running = false;

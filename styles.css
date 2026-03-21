@@ -572,6 +572,14 @@ kbd {
   height: 38%;
   background: center 52% / 200% auto no-repeat url("./assets/poulailler.png");
   z-index: 12;
+  transition: filter 160ms ease, transform 160ms ease;
+}
+
+.coop.can-deposit {
+  filter:
+    drop-shadow(0 0 14px rgba(255, 245, 176, 0.95))
+    drop-shadow(0 0 28px rgba(255, 203, 83, 0.65));
+  transform: scale(1.03);
 }
 
 .coop-roof,
@@ -848,16 +856,92 @@ kbd {
   justify-content: center;
 }
 
-.dpad {
-  display: none;
-  gap: 10px;
-  align-items: center;
-  flex-direction: column;
+.mobile-controls {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+  align-items: flex-end;
+  gap: 18px;
 }
 
-.dpad-middle {
+.joystick-shell {
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.joystick-base {
+  position: relative;
+  width: 124px;
+  height: 124px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.2) 38%, rgba(255, 220, 170, 0.55) 100%);
+  box-shadow:
+    inset 0 -8px 0 rgba(147, 102, 42, 0.14),
+    0 14px 28px rgba(55, 46, 31, 0.14);
+  touch-action: none;
+}
+
+.joystick-base::before,
+.joystick-base::after {
+  content: "";
+  position: absolute;
+  inset: 14px;
+  border-radius: 50%;
+}
+
+.joystick-base::before {
+  border: 2px dashed rgba(145, 101, 39, 0.22);
+}
+
+.joystick-base::after {
+  inset: 30px;
+  border: 2px solid rgba(255, 255, 255, 0.48);
+}
+
+.joystick-knob {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  transform: translate(0, 0);
+  margin-left: -31px;
+  margin-top: -31px;
+  background: linear-gradient(180deg, #fffef8 0%, #ffd78a 100%);
+  box-shadow:
+    inset 0 -6px 0 rgba(141, 95, 53, 0.14),
+    0 10px 18px rgba(57, 45, 24, 0.18);
+}
+
+.mobile-actions {
   display: flex;
-  gap: 10px;
+  flex-direction: row;
+  gap: 12px;
+  align-items: stretch;
+  justify-content: flex-end;
+}
+
+.touch-action {
+  min-width: 128px;
+  min-height: 58px;
+  padding: 12px 18px;
+  border: 0;
+  border-radius: 999px;
+  color: #53361b;
+  font-weight: 900;
+  font-size: 1rem;
+  box-shadow: inset 0 -4px 0 rgba(141, 95, 53, 0.14), 0 10px 24px rgba(55, 46, 31, 0.12);
+}
+
+.pickup-action {
+  background: linear-gradient(180deg, #fff8d3 0%, #ffc868 100%);
+}
+
+.drop-action {
+  background: linear-gradient(180deg, #fff3f2 0%, #ff9e7c 100%);
 }
 
 .move-button {
@@ -1150,7 +1234,16 @@ kbd {
     height: 84px;
   }
 
-  .dpad {
+  .mobile-controls {
     display: flex;
+    justify-content: space-between;
+  }
+
+  .joystick-shell {
+    display: flex;
+  }
+
+  .mobile-actions {
+    flex-direction: column;
   }
 }
