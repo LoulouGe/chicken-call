@@ -52,6 +52,26 @@
 
         <section class="board-wrap">
           <div id="gameBoard" class="board" aria-label="Aire de jeu Chicken Call">
+            <div class="mobile-hud" aria-hidden="true">
+              <div class="mobile-mission">
+                <p class="mobile-hud-label">Mission</p>
+                <p id="mobilePromptText" class="mobile-prompt">Charge les bonnes poules.</p>
+              </div>
+              <div class="mobile-stats">
+                <div class="mobile-stat-pill mobile-pill-yellow">
+                  <span class="mobile-hud-label">A livrer</span>
+                  <strong id="mobileRemainingText">0</strong>
+                </div>
+                <div class="mobile-stat-pill mobile-pill-green">
+                  <span class="mobile-hud-label">Pile</span>
+                  <strong id="mobileStackText">0</strong>
+                </div>
+                <div class="mobile-stat-pill mobile-pill-coral">
+                  <span class="mobile-hud-label">Erreurs</span>
+                  <strong id="mobileMistakeText">0</strong>
+                </div>
+              </div>
+            </div>
             <div class="board-frame"></div>
             <div class="sky-layer"></div>
             <div class="cloud cloud-a"></div>

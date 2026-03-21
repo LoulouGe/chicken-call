@@ -385,6 +385,10 @@ kbd {
   box-shadow: 0 30px 70px rgba(70, 59, 40, 0.22);
 }
 
+.mobile-hud {
+  display: none;
+}
+
 .board-frame {
   display: none;
 }
@@ -1135,87 +1139,110 @@ kbd {
 }
 
 @media (max-width: 760px) {
+  html,
+  body {
+    min-height: 100dvh;
+  }
+
   .page-shell {
-    width: min(100% - 16px, 1400px);
-    padding-top: 12px;
+    width: calc(100% - 10px);
+    padding: 5px 0;
   }
 
-  .topbar {
-    padding: 16px;
-    border-radius: 28px;
-    flex-direction: column;
-    align-items: stretch;
+  .game-layout {
+    display: block;
   }
 
-  .brand-block {
-    align-items: flex-start;
-  }
-
-  .brand-mark {
-    width: 74px;
-    height: 74px;
-    flex-basis: 74px;
-  }
-
-  .topbar-actions {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .card {
-    border-radius: 24px;
-    padding: 16px;
-  }
-
-  .mission-head {
-    align-items: center;
-  }
-
-  .mission-chick {
-    width: 66px;
-    height: 66px;
-    flex-basis: 66px;
-  }
-
-  .mission-card h2 {
-    font-size: 1.52rem;
-  }
-
-  .stats-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .stat-card {
-    min-height: 94px;
-  }
-
-  .stat-card strong {
-    font-size: 1.7rem;
-  }
-
-  .helper-head {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .board {
-    aspect-ratio: 4 / 5;
-    border-radius: 30px;
-  }
-
-  .tree-c,
-  .cloud-c,
-  .fence-b {
+  .hud-panel {
     display: none;
   }
 
-  .coop {
-    width: 32%;
-    height: 28%;
-    top: 1%;
-    right: 4%;
-    background-size: 200% auto;
-    background-position: center 50%;
+  .board-wrap {
+    min-height: calc(100dvh - 10px);
+    gap: 6px;
+  }
+
+  .board {
+    flex: 1;
+    min-height: calc(100dvh - 168px);
+    aspect-ratio: auto;
+    border-radius: 24px;
+  }
+
+  .mobile-hud {
+    position: absolute;
+    inset: 10px 10px auto 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    z-index: 30;
+    pointer-events: none;
+  }
+
+  .mobile-mission {
+    max-width: 82%;
+    padding: 10px 12px;
+    border-radius: 18px;
+    background: rgba(255, 252, 243, 0.92);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 10px 22px rgba(58, 43, 20, 0.12);
+  }
+
+  .mobile-hud-label {
+    display: block;
+    margin: 0;
+    font-size: 0.62rem;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(83, 60, 35, 0.72);
+  }
+
+  .mobile-prompt {
+    margin: 4px 0 0;
+    font-family: "Fredoka", sans-serif;
+    font-size: 0.95rem;
+    line-height: 1.05;
+    color: var(--ink);
+  }
+
+  .mobile-stats {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .mobile-stat-pill {
+    min-width: 74px;
+    padding: 8px 10px 9px;
+    border-radius: 16px;
+    color: white;
+    box-shadow: 0 10px 22px rgba(58, 43, 20, 0.12);
+  }
+
+  .mobile-stat-pill strong {
+    display: block;
+    margin-top: 2px;
+    font-family: "Fredoka", sans-serif;
+    font-size: 1.05rem;
+    line-height: 1;
+  }
+
+  .mobile-pill-yellow {
+    background: linear-gradient(180deg, #ffe888 0%, #ffb451 100%);
+    color: #5d411f;
+  }
+
+  .mobile-pill-yellow .mobile-hud-label {
+    color: rgba(93, 65, 31, 0.72);
+  }
+
+  .mobile-pill-green {
+    background: linear-gradient(180deg, #90eb97 0%, #3eaf5d 100%);
+  }
+
+  .mobile-pill-coral {
+    background: linear-gradient(180deg, #ffa58f 0%, #f06663 100%);
   }
 
   .message-bubble {
@@ -1237,6 +1264,8 @@ kbd {
   .mobile-controls {
     display: flex;
     justify-content: space-between;
+    align-items: end;
+    padding: 0 4px;
   }
 
   .joystick-shell {
@@ -1245,5 +1274,25 @@ kbd {
 
   .mobile-actions {
     flex-direction: column;
+    gap: 10px;
+    margin-bottom: 2px;
+  }
+
+  .touch-action {
+    min-width: 118px;
+    min-height: 54px;
+    font-size: 0.96rem;
+  }
+
+  .joystick-base {
+    width: 118px;
+    height: 118px;
+  }
+
+  .joystick-knob {
+    width: 58px;
+    height: 58px;
+    margin-left: -29px;
+    margin-top: -29px;
   }
 }
