@@ -909,10 +909,10 @@ kbd {
 }
 
 .overlay-medal {
-  width: 90px;
-  height: 90px;
-  margin: 0 auto 10px;
-  background: center / contain no-repeat url("./assets/star-medal.svg");
+  width: 290px;
+  height: 290px;
+  margin: 0 auto 16px;
+  background: center / contain no-repeat url("./assets/logo.png");
 }
 
 .overlay-card h2 {

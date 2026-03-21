@@ -152,7 +152,7 @@ const settings = {
     bottom: 552,
   },
   chickenCount: 9,
-  playerSpeed: 260,
+  playerSpeed: 190,
   chickenBaseSpeed: 34,
   chickenSpeedStep: 12,
   roundsPerGame: 1,
