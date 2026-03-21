@@ -15,7 +15,7 @@
       rel="stylesheet"
     />
     <link rel="icon" type="image/png" href="./assets/poule.png" />
-    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./styles.css?v=3" />
   </head>
   <body>
     <div class="page-glow page-glow-a"></div>
@@ -32,6 +32,7 @@
               <div class="hud-side">
                 <div class="heart-hud" aria-label="Erreurs restantes">
                   <div class="heart-slot"><span class="life-heart" data-heart="0">♥</span></div>
+                  <div class="heart-slot"><span class="life-heart" data-heart="1">♥</span></div>
                 </div>
                 <div class="board-stats" aria-live="polite">
                   <div class="board-stat">
@@ -182,16 +183,16 @@
 
           <div class="notebook-nav">
             <button id="notebookPrevButton" class="soft-button notebook-nav-button" type="button">
-              Page precedente
+              <span class="nav-arrow">←</span>&nbsp;<span class="nav-text">Page precedente</span>
             </button>
             <button id="notebookNextButton" class="primary-button notebook-nav-button" type="button">
-              Page suivante
+              <span class="nav-text">Page suivante</span>&nbsp;<span class="nav-arrow">→</span>
             </button>
           </div>
         </div>
       </div>
     </div>
 
-    <script src="./game.js"></script>
+    <script src="./game.js?v=3"></script>
   </body>
 </html>
