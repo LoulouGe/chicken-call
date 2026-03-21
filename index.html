@@ -22,55 +22,23 @@
     <div class="page-glow page-glow-b"></div>
     <div class="page-shell">
       <main class="game-layout">
-        <section class="hud-panel">
-          <div class="card mission-card">
-            <div class="mission-head">
-              <div>
-                <p class="card-label">Mission</p>
-                <h2 id="promptText">Charge les bonnes poules.</h2>
-              </div>
-              <div class="mission-chick" aria-hidden="true"></div>
-            </div>
-            <p id="targetWords" class="target-words"></p>
-          </div>
-
-          <div class="stats-grid">
-            <article class="card stat-card stat-yellow">
-              <p class="card-label">A livrer</p>
-              <strong id="remainingText">0</strong>
-            </article>
-            <article class="card stat-card stat-green">
-              <p class="card-label">Empilement</p>
-              <strong id="stackText">0</strong>
-            </article>
-            <article class="card stat-card stat-coral">
-              <p class="card-label">Erreurs</p>
-              <strong id="mistakeText">0</strong>
-            </article>
-          </div>
-        </section>
-
         <section class="board-wrap">
           <div id="gameBoard" class="board" aria-label="Aire de jeu Chicken Call">
-            <div class="mobile-hud" aria-hidden="true">
-              <div class="mobile-mission">
-                <p class="mobile-hud-label">Mission</p>
-                <p id="mobilePromptText" class="mobile-prompt">Charge les bonnes poules.</p>
+            <div class="board-hud">
+              <div class="instruction-banner">
+                <p id="promptText" class="instruction-text">Charge les bonnes poules.</p>
               </div>
-              <div class="mobile-stats">
-                <div class="mobile-stat-pill mobile-pill-yellow">
-                  <span class="mobile-hud-label">A livrer</span>
-                  <strong id="mobileRemainingText">0</strong>
-                </div>
-                <div class="mobile-stat-pill mobile-pill-green">
-                  <span class="mobile-hud-label">Pile</span>
-                  <strong id="mobileStackText">0</strong>
-                </div>
-                <div class="mobile-stat-pill mobile-pill-coral">
-                  <span class="mobile-hud-label">Erreurs</span>
-                  <strong id="mobileMistakeText">0</strong>
-                </div>
+              <div class="heart-hud" aria-label="Erreurs restantes">
+                <div class="heart-slot"><span class="life-heart" data-heart="0">♥</span></div>
+                <div class="heart-slot"><span class="life-heart" data-heart="1">♥</span></div>
+                <div class="heart-slot"><span class="life-heart" data-heart="2">♥</span></div>
               </div>
+            </div>
+            <div class="sr-metrics" aria-hidden="true">
+              <span id="targetWords"></span>
+              <span id="remainingText">0</span>
+              <span id="stackText">0</span>
+              <span id="mistakeText">0</span>
             </div>
             <div class="board-frame"></div>
             <div class="sky-layer"></div>
