@@ -794,6 +794,26 @@ function escapeHtml(text) {
 }
 
 function buildNotebookPageMarkup(theme, index) {
+  if (theme === 'TOC') {
+    const links = exerciseThemes.map((t, i) => {
+      const targetSpread = Math.floor((i + 1) / 2);
+      return `<button class="notebook-toc-link" onclick="animateNotebookToSpread(${targetSpread})">
+                <span class="toc-number">${String(i + 1).padStart(2, '0')}.</span> 
+                <span class="toc-label">${escapeHtml(capitalize(t.label))}</span>
+              </button>`;
+    }).join('');
+
+    return `
+      <div class="notebook-page-header">
+        <span class="notebook-topic-badge">Index</span>
+        <span class="notebook-page-number">Page 1</span>
+      </div>
+      <h3 class="notebook-page-title">Sommaire</h3>
+      <p class="notebook-page-note">Clique sur un theme pour y acceder directement.</p>
+      <div class="notebook-toc-list">${links}</div>
+    `;
+  }
+
   if (!theme) {
     return `
       <div class="notebook-page-header">
@@ -820,7 +840,7 @@ function buildNotebookPageMarkup(theme, index) {
 
   return `
     <div class="notebook-page-header">
-      <span class="notebook-topic-badge">Theme ${index + 1}</span>
+      <span class="notebook-topic-badge">Theme ${index}</span>
       <span class="notebook-page-number">Page ${index + 1}</span>
     </div>
     <h3 class="notebook-page-title">${escapeHtml(capitalize(theme.label))}</h3>
@@ -831,16 +851,18 @@ function buildNotebookPageMarkup(theme, index) {
 }
 
 function getNotebookSpreadCount() {
-  return Math.ceil(exerciseThemes.length / 2);
+  return Math.ceil((exerciseThemes.length + 1) / 2);
 }
 
 function getNotebookSpreadThemes(spreadIndex) {
   const leftIndex = spreadIndex * 2;
-  const rightIndex = leftIndex + 1;
+  const rightIndex = spreadIndex * 2 + 1;
+  const leftTheme = leftIndex === 0 ? 'TOC' : (exerciseThemes[leftIndex - 1] || null);
+  const rightTheme = rightIndex === 0 ? 'TOC' : (exerciseThemes[rightIndex - 1] || null);
   return {
-    leftTheme: exerciseThemes[leftIndex] || null,
+    leftTheme,
     leftIndex,
-    rightTheme: exerciseThemes[rightIndex] || null,
+    rightTheme,
     rightIndex,
   };
 }
@@ -852,7 +874,7 @@ function updateNotebookControls() {
     notebookPageCurrent.textContent = rightTheme ? `${leftIndex + 1}-${rightIndex + 1}` : `${leftIndex + 1}`;
   }
   if (notebookPageTotal) {
-    notebookPageTotal.textContent = `${exerciseThemes.length}`;
+    notebookPageTotal.textContent = `${exerciseThemes.length + 1}`;
   }
 
   if (notebookPrevButton) {
@@ -1476,7 +1498,7 @@ function showHowToPlay() {
   state.running = false;
   overlayTitle.textContent = 'Comment jouer';
   overlayText.textContent =
-    'Tu joues 3 manches par partie. Approche-toi d une poule pour lire et entendre son mot, porte-la avec E puis depose les bonnes au poulailler. Plus tu avances, plus les poules sont rapides. Le cahier reste disponible sur l ecran d accueil et l ecran de fin.';
+    'Ramène les bonnes poules au poulailler.';
   setResultPanel(false);
   setRecapVisible(false);
   overlayButton.textContent = state.gameFinished ? 'Rejouer' : 'Continuer';
